@@ -1,0 +1,19 @@
+{
+  "name": "when-it-will-be",
+  "version": "0.0.1",
+  "description": "A Chrome Extension which helps to know when it will be.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/otchy210/when-it-will-be.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/otchy210/when-it-will-be/issues"
+  },
+  "homepage": "https://github.com/otchy210/when-it-will-be#readme"
+}
