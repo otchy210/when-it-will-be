@@ -9,12 +9,12 @@ module.exports = {
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "project": "./tsconfig.json",
+        "project": "./tsconfig.json"
     },
     "plugins": [
         "@typescript-eslint", "import", "unused-imports"
     ],
-    "ignorePatterns": [],
+    "ignorePatterns": ["**/*.json"],
     "rules": {
         "no-case-declarations": "off",
         "prettier/prettier": ["error", {
