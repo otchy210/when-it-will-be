@@ -5,17 +5,28 @@ type Props = Record<string, never>;
 
 const PopupPage: React.FC<Props> = () => {
     const [now, setNow] = useState<number>();
+    const [windowSize, setWindoeSize] = useState<{ width: number; height: number }>();
     const backgroundApi = useBackgroundApi();
-    const onClick = async () => {
+    const onClickGetNow = async () => {
         const now = await backgroundApi.getNow();
         setNow(now);
+    };
+    const onClickGetWindowSize = async () => {
+        const windowSize = await backgroundApi.getWindowSize();
+        setWindoeSize(windowSize);
     };
     return (
         <>
             <div>
-                <button onClick={onClick}>getNow</button>
+                <button onClick={onClickGetNow}>getNow</button>
             </div>
-            <div>{now}</div>
+            <div>now: {now}</div>
+            <div>
+                <button onClick={onClickGetWindowSize}>getWindowSize</button>
+            </div>
+            <div>
+                width: {windowSize && windowSize.width}, height: {windowSize && windowSize.height}
+            </div>
         </>
     );
 };

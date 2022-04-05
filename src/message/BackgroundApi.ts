@@ -14,6 +14,10 @@ class BackgroundApi {
     getNow(): Promise<number> {
         return this.send('getNow') as Promise<number>;
     }
+
+    getWindowSize(): Promise<{ width: number; height: number }> {
+        return this.send('getWindowSize') as Promise<{ width: number; height: number }>;
+    }
 }
 
 const instance = new BackgroundApi();
