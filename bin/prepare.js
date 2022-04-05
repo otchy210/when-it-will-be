@@ -1,5 +1,6 @@
 const fs = require('fs');
 
+// manifest.json
 const packageJsonPath = './package.json';
 const srcPath = './src/manifest.json';
 const destPath = './build/manifest.json';
@@ -13,3 +14,10 @@ const destJson = JSON.parse(fs.readFileSync(srcPath));
 });
 
 fs.writeFileSync(destPath, JSON.stringify(destJson, null, 4));
+
+// html files
+['popup'].forEach((fileName) => {
+    const srcPath = `./src/${fileName}.html`;
+    const destPath = `./build/${fileName}.html`;
+    fs.copyFileSync(srcPath, destPath);
+});
