@@ -17,3 +17,11 @@ export type MessageHandler = {
     action: string;
     handle: (payload?: Json) => Promise<Json>;
 };
+
+export type CountryDB = {
+    [countryCode: string]: string;
+};
+
+export type TimeZoneDB = {
+    [zoneName: string]: [abbreviation: string, timeStart: number, gmtOffset: number, dst: number];
+};

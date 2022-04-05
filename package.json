@@ -4,6 +4,7 @@
     "description": "A Chrome Extension which helps to know when it will be.",
     "main": "index.js",
     "scripts": {
+        "parse:time-zone-db": "node ./bin/parse-time-zone-db.js",
         "prepare": "node ./bin/prepare.js",
         "build": "npm run prepare && webpack --mode production",
         "lint": "eslint --no-error-on-unmatched-pattern src/*",
