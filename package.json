@@ -6,7 +6,6 @@
     "scripts": {
         "build:manifest": "node ./bin/build-manifest.js",
         "build": "npm run build:manifest && webpack --mode production",
-        "watch": "webpack --watch --mode development",
         "lint": "eslint --no-error-on-unmatched-pattern src/*",
         "lint:fix": "eslint --fix --no-error-on-unmatched-pattern src/*",
         "test": "jest"
