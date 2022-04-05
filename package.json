@@ -1,19 +1,27 @@
 {
-  "name": "when-it-will-be",
-  "version": "0.0.1",
-  "description": "A Chrome Extension which helps to know when it will be.",
-  "main": "index.js",
-  "scripts": {
-    "test": "jest"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/otchy210/when-it-will-be.git"
-  },
-  "author": "",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/otchy210/when-it-will-be/issues"
-  },
-  "homepage": "https://github.com/otchy210/when-it-will-be#readme"
+    "name": "when-it-will-be",
+    "version": "0.0.1",
+    "description": "A Chrome Extension which helps to know when it will be.",
+    "main": "index.js",
+    "scripts": {
+        "build": "webpack --mode production",
+        "watch": "webpack --watch --mode development",
+        "test": "jest"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/otchy210/when-it-will-be.git"
+    },
+    "author": "",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/otchy210/when-it-will-be/issues"
+    },
+    "homepage": "https://github.com/otchy210/when-it-will-be#readme",
+    "devDependencies": {
+        "ts-loader": "^9.2.8",
+        "typescript": "^4.6.3",
+        "webpack": "^5.71.0",
+        "webpack-cli": "^4.9.2"
+    }
 }

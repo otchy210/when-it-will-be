@@ -1,0 +1,7 @@
+{
+    "compilerOptions": {
+        "sourceMap": true,
+        "target": "es2022",
+        "module": "umd"
+    }
+}
