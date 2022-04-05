@@ -15,5 +15,5 @@ export type Message = {
 
 export type MessageHandler = {
     action: string;
-    handle: (tab: chrome.tabs.Tab, payload?: Json) => Promise<Json | undefined>;
+    handle: (payload?: Json) => Promise<Json>;
 };

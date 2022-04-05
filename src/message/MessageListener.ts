@@ -8,16 +8,15 @@ export class MessageListener {
             this.handlers.set(handler.action, handler);
         });
     }
-    listen(message: Message, sender: chrome.runtime.MessageSender, callback: (response?: Json) => void) {
+    listen(message: Message, callback: (response?: Json) => void) {
         const { action, payload } = message;
-        const { tab } = sender;
         const handler = this.handlers.get(action);
         if (!handler) {
             console.warn(`No handler found: ${action}`);
             return;
         }
         handler
-            .handle(tab, payload)
+            .handle(payload)
             .then((response) => {
                 callback(response);
             })
