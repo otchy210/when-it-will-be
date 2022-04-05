@@ -16,8 +16,20 @@ const destJson = JSON.parse(fs.readFileSync(srcPath));
 fs.writeFileSync(destPath, JSON.stringify(destJson, null, 4));
 
 // html files
-['popup'].forEach((fileName) => {
-    const srcPath = `./src/${fileName}.html`;
-    const destPath = `./build/${fileName}.html`;
+fs.readdirSync('./src').filter((file) => {
+    return file.endsWith('.html');
+}).forEach((file) => {
+    const srcPath = `./src/${file}`;
+    const destPath = `./build/${file}`;
+    fs.copyFileSync(srcPath, destPath);
+});
+
+// image files
+fs.mkdirSync('./build/images', {recursive: true});
+fs.readdirSync('./src/images').filter((file) => {
+    return file.endsWith('.png');
+}).forEach((file) => {
+    const srcPath = `./src/images/${file}`;
+    const destPath = `./build/images/${file}`;
     fs.copyFileSync(srcPath, destPath);
 });
