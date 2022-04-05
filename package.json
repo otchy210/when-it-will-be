@@ -21,6 +21,7 @@
     },
     "homepage": "https://github.com/otchy210/when-it-will-be#readme",
     "devDependencies": {
+        "@types/chrome": "0.0.180",
         "@types/jest": "^27.4.1",
         "@types/react": "^17.0.43",
         "@types/react-dom": "^17.0.14",

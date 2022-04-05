@@ -1,5 +1,4 @@
-import React from 'react';
 import ReactDom from 'react-dom';
-import PopupPage from './components/page/PopupPage';
+import PopupPage from './components/PopupPage';
 
 ReactDom.render(<PopupPage />, document.getElementById('root'));
