@@ -32,7 +32,9 @@ const countriesPath = `${timeZoneDirPath}/country.json`;
 fs.writeFileSync(countriesPath, JSON.stringify(countries));
 
 const records = {};
-parse(fs.readFileSync(timeZoneCsvFile)).forEach(([zoneName, countryCode, abbreviation, timeStart, gmtOffset, dst]) => {
+parse(fs.readFileSync(timeZoneCsvFile)).forEach(([zoneName, countryCode, _, timeStart, gmtOffset, dst]) => {
+    // omit abbreviation since it doesn't work well
+    // see https://en.wikipedia.org/wiki/List_of_time_zone_abbreviations 
     if (!records[countryCode]) {
         records[countryCode] = {};
     }
@@ -40,7 +42,6 @@ parse(fs.readFileSync(timeZoneCsvFile)).forEach(([zoneName, countryCode, abbrevi
         records[countryCode][zoneName] = [];
     }
     const data = [
-        abbreviation,
         Number(timeStart),
         Number(gmtOffset),
         Number(dst)
