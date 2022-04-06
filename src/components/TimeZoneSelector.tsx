@@ -2,10 +2,10 @@ import { MomentZone } from 'moment-timezone';
 import { useState } from 'react';
 import { Countries } from '../types';
 import { formatAbbrs, getTimeZones } from '../utils/TimeZone';
-import CancelButton from './CancelButton';
 import DatalistInput from './DatalistInput';
 import HorizontalStack from './HorizontalStack';
 import Label from './Label';
+import LinkButton from './LinkButton';
 import SubmitButton from './SubmitButton';
 import VirticalStack from './VirticalStack';
 
@@ -80,7 +80,7 @@ const TimeZoneSelector: React.FC<Props> = ({ countries, onClickAdd }: Props) => 
                     <Label style={{ marginTop: '0.25rem' }}>Time zone</Label>
                     <div>{timeZone}</div>
                     <HorizontalStack style={{ marginTop: '0.25rem', justifyContent: 'flex-end' }}>
-                        <CancelButton onClick={onClickClear}>Clear</CancelButton>
+                        <LinkButton onClick={onClickClear}>Clear</LinkButton>
                         <SubmitButton
                             disabled={!(countrySelected && timeZoneSelected)}
                             onClick={() => {

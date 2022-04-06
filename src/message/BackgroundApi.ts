@@ -19,6 +19,9 @@ class BackgroundApi {
     addSelectedTimeZone(timeZone: string): Promise<string[]> {
         return this.send('addSelectedTimeZone', { timeZone }) as Promise<string[]>;
     }
+    removeSelectedTimeZone(timeZone: string): Promise<string[]> {
+        return this.send('removeSelectedTimeZone', { timeZone }) as Promise<string[]>;
+    }
     getWindowSize(): Promise<{ width: number; height: number }> {
         return this.send('getWindowSize') as Promise<{ width: number; height: number }>;
     }

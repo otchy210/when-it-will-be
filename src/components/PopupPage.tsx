@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import { useBackgroundApi } from '../message/BackgroundApi';
 import { Countries } from '../types';
 import GlobalStyle from './GlobalStyle';
 import HorizontalLine from './HorizontalLine';
+import LinkButton from './LinkButton';
+import Note from './Note';
 import TimeViewer from './TimeViewer';
 import TimeZoneSelector from './TimeZoneSelector';
 import VirticalStack from './VirticalStack';
+
+const TimeViewerHolder = styled.div`
+    cursor: pointer;
+`;
 
 type Props = Record<string, never>;
 
@@ -23,6 +30,9 @@ const PopupPage: React.FC<Props> = () => {
     const onClickAdd = async (timeZone: string) => {
         backgroundApi.addSelectedTimeZone(timeZone).then(setSelectedTimeZones);
     };
+    const onClickRemove = (timeZone: string) => {
+        backgroundApi.removeSelectedTimeZone(timeZone).then(setSelectedTimeZones);
+    };
     return (
         <>
             <GlobalStyle />
@@ -32,8 +42,13 @@ const PopupPage: React.FC<Props> = () => {
                     <>
                         <HorizontalLine />
                         {selectedTimeZones.map((timeZone) => {
-                            return <TimeViewer timeZone={timeZone} time={now} />;
+                            return (
+                                <TimeViewerHolder onClick={() => onClickRemove(timeZone)}>
+                                    <TimeViewer timeZone={timeZone} time={now} />
+                                </TimeViewerHolder>
+                            );
                         })}
+                        {selectedTimeZones.length > 0 ? <Note>Click to remove</Note> : <LinkButton>Restore default</LinkButton>}
                     </>
                 )}
                 {countries && (
