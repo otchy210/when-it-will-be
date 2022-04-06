@@ -16,12 +16,16 @@ const Time = styled.div`
 `;
 
 type Props = {
-    label: string;
-    epochTime: number;
+    label?: string;
     timeZone?: string;
+    epochTime: number;
 };
 
-const TimeViewer: React.FC<Props> = ({ label, epochTime, timeZone }: Props) => {
+const TimeViewer: React.FC<Props> = ({ label: givenLabel, timeZone, epochTime }: Props) => {
+    if (!givenLabel && !timeZone) {
+        throw new Error('Either label or timeZone is required.');
+    }
+    const label = givenLabel ?? timeZone.split('/').at(-1).replaceAll('_', ' ');
     const time = timeZone ? moment(epochTime).tz(timeZone) : moment(epochTime);
     return (
         <HorizontalStack>
