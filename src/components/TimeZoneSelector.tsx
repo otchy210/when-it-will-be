@@ -1,5 +1,7 @@
+import { MomentZone } from 'moment-timezone';
 import { useState } from 'react';
-import { TimeZoneDB } from '../types';
+import { Countries } from '../types';
+import { formatAbbrs, getTimeZones } from '../utils/TimeZone';
 import CancelButton from './CancelButton';
 import DatalistInput from './DatalistInput';
 import HorizontalStack from './HorizontalStack';
@@ -8,28 +10,35 @@ import SubmitButton from './SubmitButton';
 import VirticalStack from './VirticalStack';
 
 type Props = {
-    timeZoneDB: TimeZoneDB;
+    countries: Countries;
     onClickAdd: (timeZone: string) => void;
 };
 
-const TimeZoneSelector: React.FC<Props> = ({ timeZoneDB, onClickAdd }: Props) => {
+const TimeZoneSelector: React.FC<Props> = ({ countries, onClickAdd }: Props) => {
     const [countryCode, setCountryCode] = useState<string>();
     const [countryName, setCountryName] = useState<string>();
+    const [timeZones, setTimeZones] = useState<MomentZone[]>();
     const [timeZone, setTimeZone] = useState<string>();
 
     const countrySelected = !!countryCode && !!countryName;
     const timeZoneSelected = !!timeZone;
 
     const onChangeCountryCode = (countryCode: string) => {
-        if (!timeZoneDB[countryCode]) {
+        if (!countries[countryCode]) {
             return;
         }
         setCountryCode(countryCode);
-        setCountryName(timeZoneDB[countryCode][0]);
+        setCountryName(countries[countryCode]);
+        setTimeZones(getTimeZones(countryCode));
     };
 
     const onChangeTimeZone = (timeZone: string) => {
-        if (!timeZoneDB[countryCode][1].includes(timeZone)) {
+        const tz = timeZones
+            .filter((tz) => {
+                return tz.name === timeZone;
+            })
+            .at(0);
+        if (!tz) {
             return;
         }
         setTimeZone(timeZone);
@@ -38,6 +47,7 @@ const TimeZoneSelector: React.FC<Props> = ({ timeZoneDB, onClickAdd }: Props) =>
     const onClickClear = () => {
         setCountryCode(undefined);
         setCountryName(undefined);
+        setTimeZones(undefined);
         setTimeZone(undefined);
     };
     return (
@@ -47,7 +57,7 @@ const TimeZoneSelector: React.FC<Props> = ({ timeZoneDB, onClickAdd }: Props) =>
                     <Label>Select country code</Label>
                     <DatalistInput
                         id="countryCode"
-                        options={Object.entries(timeZoneDB).map(([code, [name]]) => [code, name])}
+                        options={Object.entries(countries).map(([code, name]) => [code, name])}
                         onChange={onChangeCountryCode}
                         focus={true}
                     />
@@ -62,7 +72,7 @@ const TimeZoneSelector: React.FC<Props> = ({ timeZoneDB, onClickAdd }: Props) =>
             {countrySelected && !timeZoneSelected && (
                 <>
                     <Label style={{ marginTop: '0.25rem' }}>Select city representing time zone</Label>
-                    <DatalistInput id="timeZone" options={timeZoneDB[countryCode][1].map((tz) => [tz, tz])} onChange={onChangeTimeZone} focus={true} />
+                    <DatalistInput id="timeZone" options={timeZones.map((tz) => [tz.name, formatAbbrs(tz)])} onChange={onChangeTimeZone} focus={true} />
                 </>
             )}
             {(countrySelected || timeZoneSelected) && (

@@ -15,9 +15,9 @@ const destJson = JSON.parse(fs.readFileSync(srcPath));
 
 fs.writeFileSync(destPath, JSON.stringify(destJson, null, 4));
 
-// html files / time-zone.json
+// html files, countries.json
 fs.readdirSync('./src').filter((file) => {
-    return file.endsWith('.html') || file === 'time-zone.json';
+    return file.endsWith('.html') || file === 'countries.json';
 }).forEach((file) => {
     const srcPath = `./src/${file}`;
     const destPath = `./build/${file}`;

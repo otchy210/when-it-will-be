@@ -18,6 +18,6 @@ export type MessageHandler = {
     handle: (payload?: Json) => Promise<Json>;
 };
 
-export type TimeZoneDB = {
-    [countryCode: string]: [countryName: string, timeZone: string[]];
+export type Countries = {
+    [countryCode: string]: string;
 };

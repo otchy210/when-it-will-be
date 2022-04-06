@@ -17,28 +17,11 @@ fs.copyFileSync(srcZipPath, destZipPath);
 execSync(`unzip ${destZipPath} -d ${tmpDirPath}`);
 
 const countryCsvFile = `${tmpDirPath}/country.csv`;
-const timeZoneCsvFile = `${tmpDirPath}/time_zone.csv`;
-
-const timeZoneJsonPath = './src/time-zone.json';
-const zoneNameSet = new Set();
-const zoneNameMap = {};
-parse(fs.readFileSync(timeZoneCsvFile)).forEach(([zoneName, countryCode]) => {
-    if (zoneNameSet.has(zoneName)) {
-        return true;
-    }
-    zoneNameSet.add(zoneName);
-    if (!zoneNameMap[countryCode]) {
-        zoneNameMap[countryCode] = [];
-    }
-    zoneNameMap[countryCode].push(zoneName);
-});
-const timeZoneDB = parse(fs.readFileSync(countryCsvFile)).reduce((map, [countryCode, countryName]) => {
-    if (!zoneNameMap[countryCode]) {
-        return map;
-    }
-    map[countryCode] = [countryName, zoneNameMap[countryCode].sort()];
+const countriesJsonFile = `./src/countries.json`;
+const countriesJson = parse(fs.readFileSync(countryCsvFile)).reduce((map, [countryCode, countryName]) => {
+    map[countryCode] = countryName;
     return map;
 }, {});
-fs.writeFileSync(timeZoneJsonPath, JSON.stringify(timeZoneDB));
+fs.writeFileSync(countriesJsonFile, JSON.stringify(countriesJson));
 
 fs.rmdirSync(tmpDirPath, {recursive: true});

@@ -1,3 +1,6 @@
+const MomentTimezoneDataPlugin = require('moment-timezone-data-webpack-plugin');
+const currentYear = new Date().getFullYear();
+
 module.exports = {
     mode: 'development',
     entry: {
@@ -23,4 +26,10 @@ module.exports = {
         ],
     },
     target: ['web', 'es2020'],
+    plugins: [
+        new MomentTimezoneDataPlugin({
+            startYear: currentYear - 1,
+            endYear: currentYear + 2,
+        }),
+    ]
 };
