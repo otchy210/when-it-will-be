@@ -30,9 +30,10 @@ export const formatAbbrs = (tz: MomentZone): string => {
 
 export const formatLabel = (timeZone: string, time: number): string => {
     const tz = moment.tz.zone(timeZone);
-    const abbr = tz.abbr(time);
-    if (abbr.startsWith('+') || abbr.startsWith('-')) {
-        return tz.name.split('/').at(-1);
+    const tzLabel = tz.name.split('/').at(-1).replaceAll('_', ' ');
+    const abbrLabel = tz.abbr(time);
+    if (abbrLabel.startsWith('+') || abbrLabel.startsWith('-')) {
+        return tzLabel;
     }
-    return `${tz.name.split('/').at(-1)} (${abbr})`;
+    return `${tzLabel} (${abbrLabel})`;
 };
