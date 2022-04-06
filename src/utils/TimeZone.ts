@@ -27,3 +27,8 @@ export const formatAbbrs = (tz: MomentZone): string => {
     });
     return `(${uniqueAbbrs.join(' / ')})`;
 };
+
+export const formatLabel = (timeZone: string, time: number): string => {
+    const tz = moment.tz.zone(timeZone);
+    return `${tz.name.split('/').at(-1)} (${tz.abbr(time)})`;
+};

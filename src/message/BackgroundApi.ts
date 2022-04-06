@@ -15,8 +15,8 @@ class BackgroundApi {
         return this.send('getCountries') as Promise<Countries>;
     }
 
-    getSelectedTimeZone(): Promise<string[]> {
-        return this.send('getSelectedTimeZone') as Promise<string[]>;
+    getSelectedTimeZones(): Promise<string[]> {
+        return this.send('getSelectedTimeZones') as Promise<string[]>;
     }
 
     getWindowSize(): Promise<{ width: number; height: number }> {

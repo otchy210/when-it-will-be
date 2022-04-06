@@ -11,25 +11,25 @@ type Props = Record<string, never>;
 
 const PopupPage: React.FC<Props> = () => {
     const [countries, setCountries] = useState<Countries>();
-    const [selectedTimeZone, setSelectedTimeZone] = useState<string[]>();
+    const [selectedTimeZones, setSelectedTimeZones] = useState<string[]>();
     const now = Date.now();
     const backgroundApi = useBackgroundApi();
     useEffect(() => {
         backgroundApi.getCountries().then(setCountries);
     }, [setCountries]);
     useEffect(() => {
-        backgroundApi.getSelectedTimeZone().then(setSelectedTimeZone);
-    }, [setSelectedTimeZone]);
+        backgroundApi.getSelectedTimeZones().then(setSelectedTimeZones);
+    }, [setSelectedTimeZones]);
     return (
         <>
             <GlobalStyle />
             <VirticalStack>
-                <TimeViewer label="Local time" epochTime={now} />
-                {selectedTimeZone && (
+                <TimeViewer label="Local time" time={now} />
+                {selectedTimeZones && (
                     <>
                         <HorizontalLine />
-                        {selectedTimeZone.map((timeZone) => {
-                            return <TimeViewer timeZone={timeZone} epochTime={now} />;
+                        {selectedTimeZones.map((timeZone) => {
+                            return <TimeViewer timeZone={timeZone} time={now} />;
                         })}
                     </>
                 )}

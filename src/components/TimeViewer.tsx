@@ -1,5 +1,6 @@
 import moment from 'moment-timezone';
 import styled from 'styled-components';
+import { formatLabel } from '../utils/TimeZone';
 import HorizontalStack from './HorizontalStack';
 import Label from './Label';
 
@@ -11,19 +12,19 @@ const Time = styled.div`
 type Props = {
     label?: string;
     timeZone?: string;
-    epochTime: number;
+    time: number;
 };
 
-const TimeViewer: React.FC<Props> = ({ label: givenLabel, timeZone, epochTime }: Props) => {
+const TimeViewer: React.FC<Props> = ({ label: givenLabel, timeZone, time }: Props) => {
     if (!givenLabel && !timeZone) {
         throw new Error('Either label or timeZone is required.');
     }
-    const label = givenLabel ?? timeZone.split('/').at(-1).replaceAll('_', ' ');
-    const time = timeZone ? moment(epochTime).tz(timeZone) : moment(epochTime);
+    const label = givenLabel ?? formatLabel(timeZone, time);
+    const mmt = timeZone ? moment(time).tz(timeZone) : moment(time);
     return (
         <HorizontalStack>
             <Label>{label}</Label>
-            <Time>{time.format('YYYY-MM-DD HH:mm ZZ')}</Time>
+            <Time>{mmt.format('YYYY-MM-DD HH:mm ZZ')}</Time>
         </HorizontalStack>
     );
 };
