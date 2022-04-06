@@ -11,21 +11,28 @@ type Props = Record<string, never>;
 
 const PopupPage: React.FC<Props> = () => {
     const [timeZoneDB, setTimeZoneDB] = useState<TimeZoneDB>();
+    const [selectedTimeZone, setSelectedTimeZone] = useState<string[]>();
     const now = Date.now();
     const backgroundApi = useBackgroundApi();
     useEffect(() => {
         backgroundApi.getTimeZoneDB().then(setTimeZoneDB);
-    }, []);
+    }, [setTimeZoneDB]);
+    useEffect(() => {
+        backgroundApi.getSelectedTimeZone().then(setSelectedTimeZone);
+    }, [setSelectedTimeZone]);
     return (
         <>
             <GlobalStyle />
             <VirticalStack>
                 <TimeViewer label="Local time" epochTime={now} />
-                <HorizontalLine />
-                <TimeViewer timeZone="Asia/Tokyo" epochTime={now} />
-                <TimeViewer timeZone="America/New_York" epochTime={now} />
-                <TimeViewer timeZone="America/Kentucky/Monticello" epochTime={now} />
-                <TimeViewer timeZone="Africa/Tunis" epochTime={now} />
+                {selectedTimeZone && (
+                    <>
+                        <HorizontalLine />
+                        {selectedTimeZone.map((timeZone) => {
+                            return <TimeViewer timeZone={timeZone} epochTime={now} />;
+                        })}
+                    </>
+                )}
                 {timeZoneDB && (
                     <>
                         <HorizontalLine />

@@ -45,7 +45,12 @@ const TimeZoneSelector: React.FC<Props> = ({ timeZoneDB, onClickAdd }: Props) =>
             {!countrySelected && (
                 <>
                     <Label>Select country code</Label>
-                    <DatalistInput id="countryCode" options={Object.entries(timeZoneDB).map(([code, [name]]) => [code, name])} onChange={onChangeCountryCode} />
+                    <DatalistInput
+                        id="countryCode"
+                        options={Object.entries(timeZoneDB).map(([code, [name]]) => [code, name])}
+                        onChange={onChangeCountryCode}
+                        focus={true}
+                    />
                 </>
             )}
             {countrySelected && (
@@ -57,7 +62,7 @@ const TimeZoneSelector: React.FC<Props> = ({ timeZoneDB, onClickAdd }: Props) =>
             {countrySelected && !timeZoneSelected && (
                 <>
                     <Label style={{ marginTop: '0.25rem' }}>Select city representing time zone</Label>
-                    <DatalistInput id="timeZone" options={timeZoneDB[countryCode][1].map((tz) => [tz, tz])} onChange={onChangeTimeZone} />
+                    <DatalistInput id="timeZone" options={timeZoneDB[countryCode][1].map((tz) => [tz, tz])} onChange={onChangeTimeZone} focus={true} />
                 </>
             )}
             {(countrySelected || timeZoneSelected) && (
