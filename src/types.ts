@@ -21,3 +21,7 @@ export type MessageHandler = {
 export type Countries = {
     [countryCode: string]: string;
 };
+
+export type GetOffset = (time: number) => string;
+
+export type TimeZoneIsh = [label: string, offset: string | GetOffset];
