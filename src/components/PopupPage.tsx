@@ -4,6 +4,7 @@ import { TimeZoneDB } from '../types';
 import GlobalStyle from './GlobalStyle';
 import HorizontalLine from './HorizontalLine';
 import TimeViewer from './TimeViewer';
+import TimeZoneSelector from './TimeZoneSelector';
 import VirticalStack from './VirticalStack';
 
 type Props = Record<string, never>;
@@ -25,8 +26,12 @@ const PopupPage: React.FC<Props> = () => {
                 <TimeViewer timeZone="America/New_York" epochTime={now} />
                 <TimeViewer timeZone="America/Kentucky/Monticello" epochTime={now} />
                 <TimeViewer timeZone="Africa/Tunis" epochTime={now} />
-                <HorizontalLine />
-                {timeZoneDB && JSON.stringify(timeZoneDB)}
+                {timeZoneDB && (
+                    <>
+                        <HorizontalLine />
+                        <TimeZoneSelector timeZoneDB={timeZoneDB} onClickAdd={(timeZone) => console.log(`${timeZone} is added!`)} />
+                    </>
+                )}
             </VirticalStack>
         </>
     );

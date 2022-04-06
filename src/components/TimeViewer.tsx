@@ -1,14 +1,7 @@
 import moment from 'moment-timezone';
 import styled from 'styled-components';
 import HorizontalStack from './HorizontalStack';
-
-const Label = styled.div`
-    white-space: nowrap;
-    margin-right: 0.25rem;
-    &::after {
-        content: ':';
-    }
-`;
+import Label from './Label';
 
 const Time = styled.div`
     font-family: monospace;
