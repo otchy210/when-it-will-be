@@ -11,7 +11,7 @@ import VirticalStack from './VirticalStack';
 
 type Props = {
     countries: Countries;
-    onClickAdd: (timeZone: string) => void;
+    onClickAdd: (timeZone: string) => Promise<void>;
 };
 
 const TimeZoneSelector: React.FC<Props> = ({ countries, onClickAdd }: Props) => {
@@ -81,7 +81,14 @@ const TimeZoneSelector: React.FC<Props> = ({ countries, onClickAdd }: Props) => 
                     <div>{timeZone}</div>
                     <HorizontalStack style={{ marginTop: '0.25rem', justifyContent: 'flex-end' }}>
                         <CancelButton onClick={onClickClear}>Clear</CancelButton>
-                        <SubmitButton disabled={!(countrySelected && timeZoneSelected)} onClick={() => onClickAdd(timeZone)}>
+                        <SubmitButton
+                            disabled={!(countrySelected && timeZoneSelected)}
+                            onClick={() => {
+                                onClickAdd(timeZone).then(() => {
+                                    onClickClear();
+                                });
+                            }}
+                        >
                             Add
                         </SubmitButton>
                     </HorizontalStack>

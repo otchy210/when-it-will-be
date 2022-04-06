@@ -20,6 +20,9 @@ const PopupPage: React.FC<Props> = () => {
     useEffect(() => {
         backgroundApi.getSelectedTimeZones().then(setSelectedTimeZones);
     }, [setSelectedTimeZones]);
+    const onClickAdd = async (timeZone: string) => {
+        backgroundApi.addSelectedTimeZone(timeZone).then(setSelectedTimeZones);
+    };
     return (
         <>
             <GlobalStyle />
@@ -36,7 +39,7 @@ const PopupPage: React.FC<Props> = () => {
                 {countries && (
                     <>
                         <HorizontalLine />
-                        <TimeZoneSelector countries={countries} onClickAdd={(timeZone) => console.log(`${timeZone} is added!`)} />
+                        <TimeZoneSelector countries={countries} onClickAdd={onClickAdd} />
                     </>
                 )}
             </VirticalStack>

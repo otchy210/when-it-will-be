@@ -15,28 +15,24 @@ class SyncStorage {
     private get<T>(keys: string[]): Promise<{ [key: string]: T }> {
         return this.storage.get(keys);
     }
-    private getOne<T>(key: string, defaultValue?: T): Promise<T> {
-        return new Promise((resolve) => {
-            this.get([key]).then((items) => {
-                if (items[key]) {
-                    resolve(items[key] as T);
-                } else {
-                    resolve(defaultValue);
-                }
-            });
-        });
+    private async getOne<T>(key: string, defaultValue?: T): Promise<T> {
+        const items = await this.get([key]);
+        if (items[key]) {
+            return items[key] as T;
+        }
+        return defaultValue;
     }
     async getSelectedTimeZones(): Promise<string[]> {
-        return DEFAULT_TIME_ZONE;
-        // return syncStorage.getOne<string[]>(SELECTED_TIME_ZONE, DEFAULT_TIME_ZONE);
+        return syncStorage.getOne<string[]>(SELECTED_TIME_ZONE, DEFAULT_TIME_ZONE);
     }
-    async addSelectedTimeZone(timeZone: string): Promise<void> {
+    async addSelectedTimeZone(timeZone: string): Promise<string[]> {
         const selectedTimeZone = await this.getSelectedTimeZones();
         if (selectedTimeZone.includes(timeZone)) {
-            return;
+            return selectedTimeZone;
         }
         selectedTimeZone.push(timeZone);
         this.setOne<string[]>(SELECTED_TIME_ZONE, selectedTimeZone);
+        return selectedTimeZone;
     }
 }
 

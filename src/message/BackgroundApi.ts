@@ -10,15 +10,15 @@ class BackgroundApi {
             chrome.runtime.sendMessage(message, resolve);
         });
     }
-
     getCountries(): Promise<Countries> {
         return this.send('getCountries') as Promise<Countries>;
     }
-
     getSelectedTimeZones(): Promise<string[]> {
         return this.send('getSelectedTimeZones') as Promise<string[]>;
     }
-
+    addSelectedTimeZone(timeZone: string): Promise<string[]> {
+        return this.send('addSelectedTimeZone', { timeZone }) as Promise<string[]>;
+    }
     getWindowSize(): Promise<{ width: number; height: number }> {
         return this.send('getWindowSize') as Promise<{ width: number; height: number }>;
     }
