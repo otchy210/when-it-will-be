@@ -1,28 +1,17 @@
-import { useEffect, useState } from 'react';
-import { useBackgroundApi } from '../message/BackgroundApi';
-import { CountryDB } from '../types';
+import { TimeZoneDB } from '../types';
 import HorizontalStack from './HorizontalStack';
 
 type Props = {
-    dummy?: string;
+    timeZoneDB: TimeZoneDB;
 };
 
-const TimeZoneSelector: React.FC<Props> = ({ dummy }: Props) => {
-    console.log(dummy);
-    const [countryDB, setCountryDB] = useState<CountryDB>();
-    const backgroundApi = useBackgroundApi();
-    useEffect(() => {
-        backgroundApi.getCountry().then((db) => {
-            setCountryDB(db);
-        });
-    }, []);
+const TimeZoneSelector: React.FC<Props> = ({ timeZoneDB }: Props) => {
     return (
         <HorizontalStack>
             <select>
-                {countryDB &&
-                    Object.entries(countryDB).map(([code, name]) => {
-                        return <option value={code}>{name}</option>;
-                    })}
+                {Object.entries(timeZoneDB).map(([code, [name]]) => {
+                    return <option value={code}>{name}</option>;
+                })}
             </select>
         </HorizontalStack>
     );

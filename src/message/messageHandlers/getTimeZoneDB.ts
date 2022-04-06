@@ -1,9 +1,9 @@
 import { MessageHandler } from '../../types';
 
-export const getCountry: MessageHandler = {
-    action: 'getCountry',
+export const getTimeZoneDB: MessageHandler = {
+    action: 'getTimeZoneDB',
     handle: () => {
-        const url = chrome.runtime.getURL('time-zones/country.json');
+        const url = chrome.runtime.getURL('time-zone.json');
         return new Promise((resolve) => {
             fetch(url).then((res) => {
                 res.json().then(resolve);

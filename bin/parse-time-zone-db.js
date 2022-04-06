@@ -19,39 +19,26 @@ execSync(`unzip ${destZipPath} -d ${tmpDirPath}`);
 const countryCsvFile = `${tmpDirPath}/country.csv`;
 const timeZoneCsvFile = `${tmpDirPath}/time_zone.csv`;
 
-const timeZoneDirPath = './src/time-zones';
-fs.rmdirSync(timeZoneDirPath, {recursive: true});
-fs.mkdirSync(timeZoneDirPath);
-
-const countries = parse(fs.readFileSync(countryCsvFile)).reduce((map, [countryCode, countryName]) => {
-    map[countryCode] = countryName;
+const timeZoneJsonPath = './src/time-zone.json';
+const zoneNameSet = new Set();
+const zoneNameMap = {};
+parse(fs.readFileSync(timeZoneCsvFile)).forEach(([zoneName, countryCode]) => {
+    if (zoneNameSet.has(zoneName)) {
+        return true;
+    }
+    zoneNameSet.add(zoneName);
+    if (!zoneNameMap[countryCode]) {
+        zoneNameMap[countryCode] = [];
+    }
+    zoneNameMap[countryCode].push(zoneName);
+});
+const timeZoneDB = parse(fs.readFileSync(countryCsvFile)).reduce((map, [countryCode, countryName]) => {
+    if (!zoneNameMap[countryCode]) {
+        return map;
+    }
+    map[countryCode] = [countryName, zoneNameMap[countryCode].sort()];
     return map;
 }, {});
-
-const countriesPath = `${timeZoneDirPath}/country.json`;
-fs.writeFileSync(countriesPath, JSON.stringify(countries));
-
-const records = {};
-parse(fs.readFileSync(timeZoneCsvFile)).forEach(([zoneName, countryCode, _, timeStart, gmtOffset, dst]) => {
-    // omit abbreviation since it doesn't work well
-    // see https://en.wikipedia.org/wiki/List_of_time_zone_abbreviations 
-    if (!records[countryCode]) {
-        records[countryCode] = {};
-    }
-    if (!records[countryCode][zoneName]) {
-        records[countryCode][zoneName] = [];
-    }
-    const data = [
-        Number(timeStart),
-        Number(gmtOffset),
-        Number(dst)
-    ];
-    records[countryCode][zoneName].push(data);
-});
-
-Object.entries(records).forEach(([countryCode, timeZoneDb]) => {
-    const timeZoneDbPath = `${timeZoneDirPath}/${countryCode}.json`;
-    fs.writeFileSync(timeZoneDbPath, JSON.stringify(timeZoneDb));
-});
+fs.writeFileSync(timeZoneJsonPath, JSON.stringify(timeZoneDB));
 
 fs.rmdirSync(tmpDirPath, {recursive: true});

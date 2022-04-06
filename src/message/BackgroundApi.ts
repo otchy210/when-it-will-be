@@ -1,4 +1,4 @@
-import { CountryDB, Json, Message } from '../types';
+import { Json, Message, TimeZoneDB } from '../types';
 
 class BackgroundApi {
     private send(action: string, payload?: Json): Promise<Json> {
@@ -11,8 +11,8 @@ class BackgroundApi {
         });
     }
 
-    getCountry(): Promise<CountryDB> {
-        return this.send('getCountry') as Promise<CountryDB>;
+    getTimeZoneDB(): Promise<TimeZoneDB> {
+        return this.send('getTimeZoneDB') as Promise<TimeZoneDB>;
     }
 
     getWindowSize(): Promise<{ width: number; height: number }> {
