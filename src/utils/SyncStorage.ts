@@ -1,4 +1,4 @@
-const DEFAULT_TIME_ZONES = ['America/Chicago', 'Asia/Tokyo', 'Asia/Singapore', 'Asia/Kolkata'];
+const DEFAULT_TIME_ZONES = ['America/Los_Angeles', 'America/Chicago', 'Asia/Kolkata', 'Asia/Singapore', 'Asia/Tokyo'];
 const SELECTED_TIME_ZONES = 'selectedTimeZones';
 
 class SyncStorage {
@@ -43,6 +43,9 @@ class SyncStorage {
             return selectedTimeZones;
         }
         return this.setSelectedTimeZones(selectedTimeZones.filter((existingTimeZone) => existingTimeZone !== timeZone));
+    }
+    async restoreDefaultSelectedTimeZones(): Promise<string[]> {
+        return this.setSelectedTimeZones(DEFAULT_TIME_ZONES);
     }
 }
 

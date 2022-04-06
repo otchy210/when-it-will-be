@@ -33,6 +33,9 @@ const PopupPage: React.FC<Props> = () => {
     const onClickRemove = (timeZone: string) => {
         backgroundApi.removeSelectedTimeZone(timeZone).then(setSelectedTimeZones);
     };
+    const onClickRestore = () => {
+        backgroundApi.restoreDefaultSelectedTimeZones().then(setSelectedTimeZones);
+    };
     return (
         <>
             <GlobalStyle />
@@ -48,7 +51,7 @@ const PopupPage: React.FC<Props> = () => {
                                 </TimeViewerHolder>
                             );
                         })}
-                        {selectedTimeZones.length > 0 ? <Note>Click to remove</Note> : <LinkButton>Restore default</LinkButton>}
+                        {selectedTimeZones.length > 0 ? <Note>Click to remove</Note> : <LinkButton onClick={onClickRestore}>Restore default</LinkButton>}
                     </>
                 )}
                 {countries && (
