@@ -33,3 +33,13 @@ fs.readdirSync('./src/images').filter((file) => {
     const destPath = `./build/images/${file}`;
     fs.copyFileSync(srcPath, destPath);
 });
+
+// time-zone files
+fs.mkdirSync('./build/time-zones', {recursive: true});
+fs.readdirSync('./src/time-zones').filter((file) => {
+    return file.endsWith('.json');
+}).forEach((file) => {
+    const srcPath = `./src/time-zones/${file}`;
+    const destPath = `./build/time-zones/${file}`;
+    fs.copyFileSync(srcPath, destPath);
+});
