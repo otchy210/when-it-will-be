@@ -59,8 +59,14 @@ const timeZoneIshMap = timeZoneIshList.reduce((map, [label, offset]) => {
     return map;
 }, new Map<string, string | GetOffset>());
 
-export const isTimeZoneIshString = (label: string): boolean => {
-    return timeZoneIshMap.has(label.toLowerCase());
+export const isTimeZoneIshString = (text: string): boolean => {
+    return timeZoneIshMap.has(text.toLowerCase());
+};
+
+const timeDiffRegEx = /^[+-][0-9]{2}([0-9]{2})?$/;
+
+export const isTimeDiffString = (text: string): boolean => {
+    return timeDiffRegEx.test(text);
 };
 
 const isGetOffset = (offset: string | GetOffset): offset is GetOffset => {

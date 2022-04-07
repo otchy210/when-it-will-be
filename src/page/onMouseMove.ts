@@ -1,4 +1,5 @@
 import { TextNodeRange } from '../utils/TextNodeRange';
+import { isTimeDiffString, isTimeZoneIshString } from '../utils/TimeZoneIsh';
 import { useHighlighter } from './Highlighter';
 
 const isTextNode = (elem: Element | Text): elem is Text => {
@@ -27,6 +28,16 @@ export const onMouseMove = (e: MouseEvent) => {
     const elem = target as Element;
     const range = getTextNodeFromPoint(elem, x, y);
     if (!range) {
+        hightlighter.hide();
+        return;
+    }
+    const wordIndexes = range.findwordUnder(x, y);
+    if (!wordIndexes) {
+        hightlighter.hide();
+        return;
+    }
+    const [wordStart, wordEnd, word] = wordIndexes;
+    if (!(isTimeZoneIshString(word) || isTimeDiffString(word))) {
         hightlighter.hide();
         return;
     }

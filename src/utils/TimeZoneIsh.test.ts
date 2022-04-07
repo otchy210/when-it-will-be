@@ -1,10 +1,20 @@
-import { getOffset, isTimeZoneIshString } from './TimeZoneIsh';
+import { getOffset, isTimeDiffString, isTimeZoneIshString } from './TimeZoneIsh';
 
 describe('isTimeZoneIshString', () => {
     it('works', () => {
         expect(isTimeZoneIshString('utc')).toBe(true);
         expect(isTimeZoneIshString('UTC')).toBe(true);
         expect(isTimeZoneIshString(' utc ')).toBe(false);
+    });
+});
+
+describe('isTimeDiffString', () => {
+    it('works', () => {
+        expect(isTimeDiffString('+abc')).toBe(false);
+        expect(isTimeDiffString('-0000')).toBe(true);
+        expect(isTimeDiffString('+08')).toBe(true);
+        expect(isTimeDiffString('+0900')).toBe(true);
+        expect(isTimeDiffString(' +0900 ')).toBe(false);
     });
 });
 
