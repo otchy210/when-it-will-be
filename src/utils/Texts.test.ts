@@ -86,14 +86,15 @@ describe('getPossibleTimeOffsetWords', () => {
 
 describe('starsWithTime', () => {
     it('works', () => {
-        expect(starsWithTime('00')).toBe(true);
-        expect(starsWithTime(' 00')).toBe(false);
-        expect(starsWithTime('2359')).toBe(true);
-        expect(starsWithTime('01:00')).toBe(true);
-        expect(starsWithTime('2:59pm')).toBe(true);
-        expect(starsWithTime('0812AM')).toBe(true);
-        expect(starsWithTime('08:12 AM')).toBe(true);
-        expect(starsWithTime('12:00 p.m.')).toBe(true);
-        expect(starsWithTime('5p')).toBe(true);
+        expect(starsWithTime('00')).toMatchObject({ hour: 0, min: undefined, sec: undefined, ampm: undefined });
+        expect(starsWithTime(' 00')).toBeFalsy();
+        expect(starsWithTime('2359  ')).toMatchObject({ hour: 23, min: 59, sec: undefined, ampm: undefined });
+        expect(starsWithTime('01:00 CDT')).toMatchObject({ hour: 1, min: 0, sec: undefined, ampm: undefined });
+        expect(starsWithTime('2:59pm')).toMatchObject({ hour: 2, min: 59, sec: undefined, ampm: 'pm' });
+        expect(starsWithTime('0812AM')).toMatchObject({ hour: 8, min: 12, sec: undefined, ampm: 'am' });
+        expect(starsWithTime('08:12 AM')).toMatchObject({ hour: 8, min: 12, sec: undefined, ampm: 'am' });
+        expect(starsWithTime('12:00 p.m.')).toMatchObject({ hour: 12, min: 0, sec: undefined, ampm: 'pm' });
+        expect(starsWithTime('5p')).toMatchObject({ hour: 5, min: undefined, sec: undefined, ampm: 'pm' });
+        expect(starsWithTime('01:06:59.088162191 -0500 CDT')).toMatchObject({ hour: 1, min: 6, sec: 59, ampm: undefined });
     });
 });
