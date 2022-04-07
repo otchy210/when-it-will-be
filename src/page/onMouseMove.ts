@@ -2,6 +2,7 @@ import moment from 'moment-timezone';
 import { TextNodeRange } from '../utils/TextNodeRange';
 import { ParsedTime, starsWithTime } from '../utils/Texts';
 import { getOffset, isTimeOffsetString, isTimeZoneIshString } from '../utils/TimeZoneIsh';
+import { useCard } from './Card';
 import { useHighlighter } from './Highlighter';
 
 const isTextNode = (elem: Element | Text): elem is Text => {
@@ -38,23 +39,33 @@ const getHour = (time: ParsedTime): number => {
     return (time.hour ?? 0) + (time.ampm === 'pm' ? 12 : 0);
 };
 
+let lastFoundWord = [-1, -1, ''];
+
 export const onMouseMove = (e: MouseEvent) => {
     const { target, x, y } = e;
     const hightlighter = useHighlighter();
+    const card = useCard();
     const elem = target as Element;
     const range = getTextNodeFromPoint(elem, x, y);
     if (!range) {
         hightlighter.hide();
+        card.hide();
         return;
     }
     const tzIndexes = range.findwordUnder(x, y);
     if (!tzIndexes) {
         hightlighter.hide();
+        card.hide();
         return;
     }
+    if (tzIndexes[0] === lastFoundWord[0] && tzIndexes[1] === lastFoundWord[1] && tzIndexes[2] === lastFoundWord[2]) {
+        return;
+    }
+    lastFoundWord = tzIndexes;
     const [tzStart, tzEnd, word] = tzIndexes;
     if (!(isTimeZoneIshString(word) || isTimeOffsetString(word))) {
         hightlighter.hide();
+        card.hide();
         return;
     }
     let parsedTime: ParsedTime;
@@ -67,6 +78,7 @@ export const onMouseMove = (e: MouseEvent) => {
     }
     if (!parsedTime) {
         hightlighter.hide();
+        card.hide();
         return;
     }
     range
@@ -90,4 +102,6 @@ export const onMouseMove = (e: MouseEvent) => {
     const offset = getOffset(word, dateWithoutOffset.getTime());
     const isoTimeWithOffset = `${isoTimeWithoutTZ}${offset}`;
     const timestamp = moment.tz(isoTimeWithOffset, 'UTC').toDate().getTime();
+
+    card.set(timestamp).show(0, 0);
 };

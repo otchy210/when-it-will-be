@@ -1,14 +1,14 @@
 export class Highlighter {
-    outer: HTMLDivElement;
-    line: HTMLDivElement;
-    inner: HTMLDivElement;
+    private outer: HTMLDivElement;
+    private line: HTMLDivElement;
+    private inner: HTMLDivElement;
     constructor() {
         this.outer = document.createElement('div');
         this.outer.style.position = 'absolute';
         this.outer.style.margin = '0';
         this.outer.style.padding = '0';
         this.outer.style.border = 'solid 1px #fff';
-        this.outer.style.zIndex = '99999999';
+        this.outer.style.zIndex = '99999';
         this.outer.style.pointerEvents = 'none';
 
         this.line = document.createElement('div');

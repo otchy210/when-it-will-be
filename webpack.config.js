@@ -7,6 +7,7 @@ module.exports = {
         background: './src/background.ts',
         popup: './src/popup.tsx',
         page: './src/page.ts',
+        card: './src/card.tsx',
     },
     output: {
         filename: '[name].js',
