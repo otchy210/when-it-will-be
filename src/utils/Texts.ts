@@ -49,6 +49,6 @@ export const getPossibleTimeZoneIshWords = (text: string): PossibleWordsIndexes 
     return getWords(text, isAlphabet);
 };
 
-export const getPossibleTimeDiffWords = (text: string): PossibleWordsIndexes => {
+export const getPossibleTimeOffsetWords = (text: string): PossibleWordsIndexes => {
     return getWords(text, (code: number) => isDigit(code) || isPossibleSign(code));
 };

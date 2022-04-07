@@ -1,4 +1,4 @@
-import { getPossibleTimeZoneIshWords, getPossibleTimeDiffWords, isAlphabet, isDigit, isPossibleSign } from './Texts';
+import { getPossibleTimeZoneIshWords, getPossibleTimeOffsetWords, isAlphabet, isDigit, isPossibleSign } from './Texts';
 
 describe('isAlphabet', () => {
     it('works', () => {
@@ -73,10 +73,10 @@ describe('getPossibleTimeZoneIshWords', () => {
     });
 });
 
-describe('getPossibleTimeDiffWords', () => {
+describe('getPossibleTimeOffsetWords', () => {
     it('works', () => {
-        expect(getPossibleTimeDiffWords('   +0900  ')).toMatchObject([[3, 8]]);
-        expect(getPossibleTimeDiffWords('+09 00 0-0')).toMatchObject([
+        expect(getPossibleTimeOffsetWords('   +0900  ')).toMatchObject([[3, 8]]);
+        expect(getPossibleTimeOffsetWords('+09 00 0-0')).toMatchObject([
             [0, 3],
             [4, 6],
             [7, 10],

@@ -63,10 +63,10 @@ export const isTimeZoneIshString = (text: string): boolean => {
     return timeZoneIshMap.has(text.toLowerCase());
 };
 
-const timeDiffRegEx = /^[+-][0-9]{2}([0-9]{2})?$/;
+const timeOffsetRegEx = /^[+-][01][0-9]([03]0)?$/;
 
-export const isTimeDiffString = (text: string): boolean => {
-    return timeDiffRegEx.test(text);
+export const isTimeOffsetString = (text: string): boolean => {
+    return timeOffsetRegEx.test(text);
 };
 
 const isGetOffset = (offset: string | GetOffset): offset is GetOffset => {

@@ -1,5 +1,5 @@
 import { Highlighter, useHighlighter } from '../page/Highlighter';
-import { getPossibleTimeZoneIshWords, getPossibleTimeDiffWords, PossibleWordsIndexes } from './Texts';
+import { getPossibleTimeZoneIshWords, getPossibleTimeOffsetWords, PossibleWordsIndexes } from './Texts';
 
 export class TextNodeRange {
     private node: Text;
@@ -44,8 +44,8 @@ export class TextNodeRange {
         if (possibleTimeZoneIshWord) {
             return possibleTimeZoneIshWord;
         }
-        const timeDiffWords = getPossibleTimeDiffWords(text);
-        return this.wordsContains(text, timeDiffWords, x, y);
+        const timeOffsetWords = getPossibleTimeOffsetWords(text);
+        return this.wordsContains(text, timeOffsetWords, x, y);
     }
 
     static of(node: Text) {

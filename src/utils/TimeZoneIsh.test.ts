@@ -1,4 +1,4 @@
-import { getOffset, isTimeDiffString, isTimeZoneIshString } from './TimeZoneIsh';
+import { getOffset, isTimeOffsetString, isTimeZoneIshString } from './TimeZoneIsh';
 
 describe('isTimeZoneIshString', () => {
     it('works', () => {
@@ -8,13 +8,17 @@ describe('isTimeZoneIshString', () => {
     });
 });
 
-describe('isTimeDiffString', () => {
+describe('isTimeOffsetString', () => {
     it('works', () => {
-        expect(isTimeDiffString('+abc')).toBe(false);
-        expect(isTimeDiffString('-0000')).toBe(true);
-        expect(isTimeDiffString('+08')).toBe(true);
-        expect(isTimeDiffString('+0900')).toBe(true);
-        expect(isTimeDiffString(' +0900 ')).toBe(false);
+        expect(isTimeOffsetString('-0000')).toBe(true);
+        expect(isTimeOffsetString('+08')).toBe(true);
+        expect(isTimeOffsetString('+0900')).toBe(true);
+        expect(isTimeOffsetString('+0430')).toBe(true);
+        expect(isTimeOffsetString('0900')).toBe(false);
+        expect(isTimeOffsetString('+123')).toBe(false);
+        expect(isTimeOffsetString('+2400')).toBe(false);
+        expect(isTimeOffsetString('+abc')).toBe(false);
+        expect(isTimeOffsetString(' +0900 ')).toBe(false);
     });
 });
 
