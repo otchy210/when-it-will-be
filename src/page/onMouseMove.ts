@@ -42,7 +42,7 @@ const getHour = (time: ParsedTime): number => {
 const WORD_NOT_FOUND = [-1, -1, ''];
 let lastFoundWord = WORD_NOT_FOUND;
 
-export const onMouseMove = (e: MouseEvent) => {
+const tryShowingCard = (e: MouseEvent) => {
     const { target, x, y } = e;
     const hightlighter = useHighlighter();
     const card = useCard();
@@ -107,4 +107,12 @@ export const onMouseMove = (e: MouseEvent) => {
     const timestamp = moment.tz(isoTimeWithOffset, 'UTC').toDate().getTime();
 
     card.set(timestamp);
+};
+
+let timeoutId;
+export const onMouseMove = (e: MouseEvent) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+        tryShowingCard(e);
+    }, 200);
 };
