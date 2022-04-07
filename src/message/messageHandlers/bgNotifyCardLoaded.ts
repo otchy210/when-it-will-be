@@ -1,12 +1,12 @@
 import { Message, MessageHandler } from '../../types';
 import { sendMessage } from '../../utils/Tabs';
 
-export const bgResizeCard: MessageHandler = {
-    action: 'bgResizeCard',
+export const bgNotifyCardLoaded: MessageHandler = {
+    action: 'bgNotifyCardLoaded',
     handle: (payload: { width: number; height: number }) => {
         return new Promise((resolve) => {
             const message: Message = {
-                action: 'resizeCard',
+                action: 'notifyCardLoaded',
                 payload,
             };
             sendMessage(message)

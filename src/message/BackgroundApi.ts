@@ -25,8 +25,8 @@ class BackgroundApi {
     restoreDefaultSelectedTimeZones(): Promise<string[]> {
         return this.send('restoreDefaultSelectedTimeZones') as Promise<string[]>;
     }
-    resizeCard(width: number, height: number): Promise<boolean> {
-        return this.send('bgResizeCard', { width, height }) as Promise<boolean>;
+    notifyCardLoaded(width: number, height: number): Promise<boolean> {
+        return this.send('bgNotifyCardLoaded', { width, height }) as Promise<boolean>;
     }
 }
 

@@ -1,5 +1,5 @@
 import { addSelectedTimeZone } from './message/messageHandlers/addSelectedTimeZone';
-import { bgResizeCard } from './message/messageHandlers/bgResizeCard';
+import { bgNotifyCardLoaded } from './message/messageHandlers/bgNotifyCardLoaded';
 import { getCountries } from './message/messageHandlers/getCountries';
 import { getSelectedTimeZones } from './message/messageHandlers/getSelectedTimeZones';
 import { removeSelectedTimeZone } from './message/messageHandlers/removeSelectedTimeZone';
@@ -13,7 +13,7 @@ const messageListener = new MessageListener([
     addSelectedTimeZone,
     removeSelectedTimeZone,
     restoreDefaultSelectedTimeZones,
-    bgResizeCard,
+    bgNotifyCardLoaded,
 ]);
 
 chrome.runtime.onMessage.addListener((message: Message, _: chrome.runtime.MessageSender, callback: (response?: Json) => void) => {

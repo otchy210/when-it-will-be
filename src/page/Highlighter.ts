@@ -51,6 +51,9 @@ export class Highlighter {
         this.resize(rect.width, rect.height).move(rect.x, rect.y).show();
         return this;
     }
+    rect(): DOMRect {
+        return this.outer.getBoundingClientRect();
+    }
 }
 
 const instance = new Highlighter();

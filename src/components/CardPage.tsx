@@ -35,7 +35,7 @@ const CardPage: React.FC<Props> = () => {
         const { marginLeft, marginRight, marginTop, marginBottom } = styles;
         const width = rect.width + Number(marginLeft.slice(0, -2)) + Number(marginRight.slice(0, -2));
         const height = rect.height + Number(marginTop.slice(0, -2)) + Number(marginBottom.slice(0, -2));
-        backgroundApi.resizeCard(width, height);
+        backgroundApi.notifyCardLoaded(width, height);
     }, [selectedTimeZones]);
 
     const url = new URL(location.href);
