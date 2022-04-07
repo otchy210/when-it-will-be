@@ -74,6 +74,10 @@ const tryShowingCard = (e: MouseEvent) => {
     let parsedTime: ParsedTime;
     for (let i = 0; i < 16; i++) {
         const foundTime = starsWithTime(range.text.slice(tzStart - i, tzStart));
+        if (foundTime && foundTime.isCompleted) {
+            parsedTime = foundTime;
+            break;
+        }
         if (parsedTime && !foundTime) {
             break;
         }

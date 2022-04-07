@@ -61,6 +61,7 @@ export type ParsedTime = {
     min: number;
     sec: number;
     ampm: string;
+    isCompleted: boolean;
 };
 
 const parseTime = (timeStr: string | undefined): number | undefined => {
@@ -86,6 +87,7 @@ export const starsWithTime = (text: string): ParsedTime | undefined => {
         const min = parseTime(results[2]);
         const sec = parseTime(results[3]);
         const ampm = parseAmpm(results[4]);
-        return { length, hour, min, sec, ampm };
+        const isCompleted = results[1].length === 2 && min >= 0 && sec >= 0;
+        return { length, hour, min, sec, ampm, isCompleted };
     }
 };
