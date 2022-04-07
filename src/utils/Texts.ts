@@ -52,3 +52,9 @@ export const getPossibleTimeZoneIshWords = (text: string): PossibleWordsIndexes 
 export const getPossibleTimeOffsetWords = (text: string): PossibleWordsIndexes => {
     return getWords(text, (code: number) => isDigit(code) || isPossibleSign(code));
 };
+
+const timeRegEx = /^[012]?[0-9](:?[0-5][0-9])?(:?[0-5][0-9])?\s*([ap]\.?m?\.?)?/i;
+
+export const starsWithTime = (text: string): boolean => {
+    return timeRegEx.test(text);
+};

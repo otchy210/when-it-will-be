@@ -1,4 +1,4 @@
-import { getPossibleTimeZoneIshWords, getPossibleTimeOffsetWords, isAlphabet, isDigit, isPossibleSign } from './Texts';
+import { getPossibleTimeZoneIshWords, getPossibleTimeOffsetWords, isAlphabet, isDigit, isPossibleSign, starsWithTime } from './Texts';
 
 describe('isAlphabet', () => {
     it('works', () => {
@@ -81,5 +81,19 @@ describe('getPossibleTimeOffsetWords', () => {
             [4, 6],
             [7, 10],
         ]);
+    });
+});
+
+describe('starsWithTime', () => {
+    it('works', () => {
+        expect(starsWithTime('00')).toBe(true);
+        expect(starsWithTime(' 00')).toBe(false);
+        expect(starsWithTime('2359')).toBe(true);
+        expect(starsWithTime('01:00')).toBe(true);
+        expect(starsWithTime('2:59pm')).toBe(true);
+        expect(starsWithTime('0812AM')).toBe(true);
+        expect(starsWithTime('08:12 AM')).toBe(true);
+        expect(starsWithTime('12:00 p.m.')).toBe(true);
+        expect(starsWithTime('5p')).toBe(true);
     });
 });
