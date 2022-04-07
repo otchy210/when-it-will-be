@@ -1,8 +1,10 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
+html {
+    font-size: 13px;
+}
 body {
-    font-size: 10pt;
     margin: 0;
 }`;
 

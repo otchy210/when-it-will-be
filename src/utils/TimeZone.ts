@@ -32,7 +32,7 @@ export const formatLabel = (timeZone: string, time: number): string => {
     const tz = moment.tz.zone(timeZone);
     const tzLabel = tz.name.split('/').at(-1).replaceAll('_', ' ');
     const abbrLabel = tz.abbr(time);
-    if (abbrLabel.startsWith('+') || abbrLabel.startsWith('-')) {
+    if (abbrLabel.startsWith('+') || abbrLabel.startsWith('-') || tzLabel === abbrLabel) {
         return tzLabel;
     }
     return `${tzLabel} (${abbrLabel})`;

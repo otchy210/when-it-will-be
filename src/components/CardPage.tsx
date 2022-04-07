@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useBackgroundApi } from '../message/BackgroundApi';
 import GlobalStyle from './GlobalStyle';
-import HorizontalLine from './HorizontalLine';
-import TimeViewer from './TimeViewer';
-import VirticalStack from './VirticalStack';
+import Viewer from './Viewer';
+import ViewerLine from './ViewerLine';
+import ViewerTime from './ViewerTime';
 
 const CardWrapper = styled.div`
     margin: 0.5rem;
@@ -12,6 +12,7 @@ const CardWrapper = styled.div`
     border-radius: 0.25rem;
     background-color: #fff;
     box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.5);
+    float: left;
 `;
 
 type Props = Record<string, never>;
@@ -29,17 +30,18 @@ const CardPage: React.FC<Props> = () => {
         <>
             <GlobalStyle />
             <CardWrapper>
-                <VirticalStack>
-                    <TimeViewer label="Local time" time={time} />
+                <Viewer>
+                    <ViewerTime label="Local time" time={time} />
+                    <ViewerTime timeZone="UTC" time={time} />
                     {selectedTimeZones?.length > 0 && (
                         <>
-                            <HorizontalLine />
+                            <ViewerLine />
                             {selectedTimeZones.map((timeZone) => {
-                                return <TimeViewer timeZone={timeZone} time={time} />;
+                                return <ViewerTime timeZone={timeZone} time={time} />;
                             })}
                         </>
                     )}
-                </VirticalStack>
+                </Viewer>
             </CardWrapper>
         </>
     );

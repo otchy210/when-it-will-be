@@ -3,19 +3,17 @@ import styled from 'styled-components';
 import { useBackgroundApi } from '../message/BackgroundApi';
 import { Countries } from '../types';
 import GlobalStyle from './GlobalStyle';
-import HorizontalLine from './HorizontalLine';
 import LinkButton from './LinkButton';
 import Note from './Note';
-import TimeViewer from './TimeViewer';
 import TimeZoneSelector from './TimeZoneSelector';
+import Viewer from './Viewer';
+import ViewerBox from './ViewerBox';
+import ViewerLine from './ViewerLine';
+import ViewerTime from './ViewerTime';
 import VirticalStack from './VirticalStack';
 
 const PageWrapper = styled.div`
     margin: 0.5rem;
-`;
-
-const TimeViewerHolder = styled.div`
-    cursor: pointer;
 `;
 
 type Props = Record<string, never>;
@@ -45,26 +43,35 @@ const PopupPage: React.FC<Props> = () => {
             <GlobalStyle />
             <PageWrapper>
                 <VirticalStack>
-                    <TimeViewer label="Local time" time={now} />
-                    {selectedTimeZones && (
-                        <>
-                            <HorizontalLine />
-                            {selectedTimeZones.map((timeZone) => {
-                                return (
-                                    <TimeViewerHolder onClick={() => onClickRemove(timeZone)}>
-                                        <TimeViewer timeZone={timeZone} time={now} />
-                                    </TimeViewerHolder>
-                                );
-                            })}
-                            {selectedTimeZones.length > 0 ? <Note>Click to remove</Note> : <LinkButton onClick={onClickRestore}>Restore default</LinkButton>}
-                        </>
-                    )}
-                    {countries && (
-                        <>
-                            <HorizontalLine />
-                            <TimeZoneSelector countries={countries} onClickAdd={onClickAdd} />
-                        </>
-                    )}
+                    <Viewer>
+                        <ViewerTime label="Local time" time={now} />
+                        <ViewerTime timeZone="UTC" time={now} />
+                        {selectedTimeZones && (
+                            <>
+                                <ViewerLine />
+                                {selectedTimeZones.map((timeZone) => {
+                                    return <ViewerTime timeZone={timeZone} time={now} onClickLabel={() => onClickRemove(timeZone)} />;
+                                })}
+                                <ViewerBox>
+                                    {selectedTimeZones.length > 0 ? (
+                                        <Note>Click label to remove</Note>
+                                    ) : (
+                                        <VirticalStack>
+                                            <LinkButton onClick={onClickRestore}>Restore default</LinkButton>
+                                        </VirticalStack>
+                                    )}
+                                </ViewerBox>
+                            </>
+                        )}
+                        {countries && (
+                            <>
+                                <ViewerLine />
+                                <ViewerBox>
+                                    <TimeZoneSelector countries={countries} onClickAdd={onClickAdd} />
+                                </ViewerBox>
+                            </>
+                        )}
+                    </Viewer>
                 </VirticalStack>
             </PageWrapper>
         </>

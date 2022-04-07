@@ -7,6 +7,7 @@ import HorizontalStack from './HorizontalStack';
 import Label from './Label';
 import LinkButton from './LinkButton';
 import SubmitButton from './SubmitButton';
+import TextBlock from './TextBlock';
 import VirticalStack from './VirticalStack';
 
 type Props = {
@@ -66,7 +67,7 @@ const TimeZoneSelector: React.FC<Props> = ({ countries, onClickAdd }: Props) => 
             {countrySelected && (
                 <>
                     <Label>Country</Label>
-                    <div>{countryName}</div>
+                    <TextBlock>{countryName}</TextBlock>
                 </>
             )}
             {countrySelected && !timeZoneSelected && (
@@ -78,7 +79,7 @@ const TimeZoneSelector: React.FC<Props> = ({ countries, onClickAdd }: Props) => 
             {(countrySelected || timeZoneSelected) && (
                 <>
                     <Label style={{ marginTop: '0.25rem' }}>Time zone</Label>
-                    <div>{timeZone}</div>
+                    <TextBlock>{timeZone}</TextBlock>
                     <HorizontalStack style={{ marginTop: '0.25rem', justifyContent: 'flex-end' }}>
                         <LinkButton onClick={onClickClear}>Clear</LinkButton>
                         <SubmitButton
