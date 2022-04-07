@@ -15,8 +15,12 @@ class Card {
     }
     set(time: number): Card {
         const url = `${this.baseURL}?time=${time}`;
-        console.log(url);
         this.iframe.setAttribute('src', url);
+        return this;
+    }
+    size(width: number, height: number): Card {
+        this.iframe.style.width = `${width}px`;
+        this.iframe.style.height = `${height}px`;
         return this;
     }
     show(x: number, y: number): Card {

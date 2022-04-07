@@ -39,7 +39,8 @@ const getHour = (time: ParsedTime): number => {
     return (time.hour ?? 0) + (time.ampm === 'pm' ? 12 : 0);
 };
 
-let lastFoundWord = [-1, -1, ''];
+const WORD_NOT_FOUND = [-1, -1, ''];
+let lastFoundWord = WORD_NOT_FOUND;
 
 export const onMouseMove = (e: MouseEvent) => {
     const { target, x, y } = e;
@@ -50,12 +51,14 @@ export const onMouseMove = (e: MouseEvent) => {
     if (!range) {
         hightlighter.hide();
         card.hide();
+        lastFoundWord = WORD_NOT_FOUND;
         return;
     }
     const tzIndexes = range.findwordUnder(x, y);
     if (!tzIndexes) {
         hightlighter.hide();
         card.hide();
+        lastFoundWord = WORD_NOT_FOUND;
         return;
     }
     if (tzIndexes[0] === lastFoundWord[0] && tzIndexes[1] === lastFoundWord[1] && tzIndexes[2] === lastFoundWord[2]) {
@@ -103,5 +106,5 @@ export const onMouseMove = (e: MouseEvent) => {
     const isoTimeWithOffset = `${isoTimeWithoutTZ}${offset}`;
     const timestamp = moment.tz(isoTimeWithOffset, 'UTC').toDate().getTime();
 
-    card.set(timestamp).show(0, 0);
+    card.set(timestamp);
 };
