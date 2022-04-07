@@ -1,6 +1,7 @@
+import moment from 'moment-timezone';
 import { TextNodeRange } from '../utils/TextNodeRange';
 import { ParsedTime, starsWithTime } from '../utils/Texts';
-import { isTimeOffsetString, isTimeZoneIshString } from '../utils/TimeZoneIsh';
+import { getOffset, isTimeOffsetString, isTimeZoneIshString } from '../utils/TimeZoneIsh';
 import { useHighlighter } from './Highlighter';
 
 const isTextNode = (elem: Element | Text): elem is Text => {
@@ -23,6 +24,20 @@ const getTextNodeFromPoint = (elem: Element | Text, x: number, y: number): TextN
     }
 };
 
+const getHour = (time: ParsedTime): number => {
+    if (!time.ampm) {
+        return time.hour ?? 0;
+    }
+    if (time.hour === 12) {
+        if (time.ampm === 'am') {
+            return 0;
+        } else {
+            return 12;
+        }
+    }
+    return (time.hour ?? 0) + (time.ampm === 'pm' ? 12 : 0);
+};
+
 export const onMouseMove = (e: MouseEvent) => {
     const { target, x, y } = e;
     const hightlighter = useHighlighter();
@@ -42,18 +57,37 @@ export const onMouseMove = (e: MouseEvent) => {
         hightlighter.hide();
         return;
     }
-    let time: ParsedTime;
+    let parsedTime: ParsedTime;
     for (let i = 0; i < 16; i++) {
         const foundTime = starsWithTime(range.text.slice(tzStart - i, tzStart));
-        if (time && !foundTime) {
+        if (parsedTime && !foundTime) {
             break;
         }
-        time = foundTime;
+        parsedTime = foundTime;
     }
-    if (!time) {
+    if (!parsedTime) {
         hightlighter.hide();
         return;
     }
-    range.start(tzStart - time.length);
-    range.hightlight();
+    range
+        .start(tzStart - parsedTime.length)
+        .end(tzEnd)
+        .hightlight();
+
+    const now = new Date();
+    const year = String(now.getFullYear());
+    const mon = String(now.getMonth() + 1).padStart(2, '0');
+    const date = String(now.getDate()).padStart(2, '0');
+    const today = `${year}-${mon}-${date}`;
+
+    const hour = String(getHour(parsedTime)).padStart(2, '0');
+    const min = String(parsedTime.min ?? 0).padStart(2, '0');
+    const sec = String(parsedTime.sec ?? 0).padStart(2, '0');
+    const time = `${hour}:${min}:${sec}`;
+
+    const isoTimeWithoutTZ = `${today}T${time}`;
+    const dateWithoutOffset = new Date(isoTimeWithoutTZ);
+    const offset = getOffset(word, dateWithoutOffset.getTime());
+    const isoTimeWithOffset = `${isoTimeWithoutTZ}${offset}`;
+    const timestamp = moment.tz(isoTimeWithOffset, 'UTC').toDate().getTime();
 };

@@ -73,11 +73,14 @@ const isGetOffset = (offset: string | GetOffset): offset is GetOffset => {
     return typeof offset === 'function';
 };
 
-export const getOffset = (label: string, time: number): string | undefined => {
-    if (!isTimeZoneIshString(label)) {
+export const getOffset = (text: string, time: number): string | undefined => {
+    if (isTimeOffsetString(text)) {
+        return text.length === 3 ? `${text}00` : text;
+    }
+    if (!isTimeZoneIshString(text)) {
         return;
     }
-    const key = label.toLowerCase();
+    const key = text.toLowerCase();
     const offset = timeZoneIshMap.get(key);
     if (isGetOffset(offset)) {
         return offset(time);
