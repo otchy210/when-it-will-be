@@ -1,37 +1,34 @@
-import { useHighlight } from './highlight';
+import { TextNodeRange } from '../utils/TextNodeRange';
+import { useHighlighter } from './Highlighter';
 
 const isTextNode = (elem: Element | Text): elem is Text => {
     return elem.nodeType == Node.TEXT_NODE;
 };
 
-const getTextNodeFromPoint = (elem: Element | Text, x: number, y: number): { textNode?: Text; range?: Range } => {
+const getTextNodeFromPoint = (elem: Element | Text, x: number, y: number): TextNodeRange | undefined => {
     if (isTextNode(elem)) {
-        const range = elem.ownerDocument.createRange();
-        range.selectNodeContents(elem);
-        const rect = range.getBoundingClientRect();
-        if (rect.left <= x && x <= rect.right && rect.top <= y && y <= rect.bottom) {
-            return { textNode: elem, range };
+        const range = TextNodeRange.of(elem);
+        if (range.contains(x, y)) {
+            return range;
         }
     } else {
         for (const child of elem.childNodes) {
-            const result = getTextNodeFromPoint(child as Element, x, y);
-            if (result && result.textNode) {
-                return result;
+            const range = getTextNodeFromPoint(child as Element, x, y);
+            if (range) {
+                return range;
             }
         }
     }
-    return {};
 };
 
 export const onMouseMove = (e: MouseEvent) => {
     const { target, x, y } = e;
-    const hightlight = useHighlight();
+    const hightlighter = useHighlighter();
     const elem = target as Element;
-    const { textNode, range } = getTextNodeFromPoint(elem, x, y);
-    if (!textNode) {
-        hightlight.hide();
+    const range = getTextNodeFromPoint(elem, x, y);
+    if (!range) {
+        hightlighter.hide();
         return;
     }
-    const rect = range.getBoundingClientRect();
-    hightlight.resize(rect.width, rect.height).move(rect.x, rect.y).show();
+    range.hightlight();
 };

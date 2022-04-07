@@ -1,4 +1,4 @@
-class Highlight {
+export class Highlighter {
     outer: HTMLDivElement;
     line: HTMLDivElement;
     inner: HTMLDivElement;
@@ -28,26 +28,31 @@ class Highlight {
 
         this.hide();
     }
-    hide(): Highlight {
+    hide(): Highlighter {
         this.outer.style.display = 'none';
         return this;
     }
-    show(): Highlight {
+    show(): Highlighter {
         this.outer.style.display = 'block';
         return this;
     }
-    move(x: number, y: number): Highlight {
+    move(x: number, y: number): Highlighter {
         this.outer.style.left = `${x - 4 + window.scrollX}px`;
         this.outer.style.top = `${y - 4 + window.scrollY}px`;
         return this;
     }
-    resize(width: number, height: number): Highlight {
+    resize(width: number, height: number): Highlighter {
         this.inner.style.width = `${width}px`;
         this.inner.style.height = `${height}px`;
         return this;
     }
+    highlight(range: Range): Highlighter {
+        const rect = range.getBoundingClientRect();
+        this.resize(rect.width, rect.height).move(rect.x, rect.y).show();
+        return this;
+    }
 }
 
-const instance = new Highlight();
+const instance = new Highlighter();
 
-export const useHighlight = () => instance;
+export const useHighlighter = () => instance;
