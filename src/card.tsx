@@ -1,3 +1,4 @@
 import ReactDom from 'react-dom';
+import CardPage from './components/CardPage';
 
-ReactDom.render(<div>card</div>, document.getElementById('root'));
+ReactDom.render(<CardPage />, document.getElementById('root'));

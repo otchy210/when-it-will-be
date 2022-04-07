@@ -24,7 +24,7 @@ const TimeViewer: React.FC<Props> = ({ label: givenLabel, timeZone, time }: Prop
     return (
         <HorizontalStack>
             <Label>{label}</Label>
-            <Time>{mmt.format('YYYY-MM-DD HH:mm ZZ')}</Time>
+            <Time>{mmt.format('HH:mm ZZ')}</Time>
         </HorizontalStack>
     );
 };

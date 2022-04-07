@@ -8,12 +8,13 @@ class Card {
         this.iframe.style.left = '-9999px';
         this.iframe.style.top = '0';
         this.iframe.style.zIndex = '99999';
+        this.iframe.style.pointerEvents = 'none';
         document.body.appendChild(this.iframe);
 
         this.baseURL = chrome.runtime.getURL('card.html');
     }
-    set(timestamp: number): Card {
-        const url = `${this.baseURL}?timestamp=${timestamp}`;
+    set(time: number): Card {
+        const url = `${this.baseURL}?time=${time}`;
         console.log(url);
         this.iframe.setAttribute('src', url);
         return this;

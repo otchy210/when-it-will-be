@@ -10,6 +10,10 @@ import TimeViewer from './TimeViewer';
 import TimeZoneSelector from './TimeZoneSelector';
 import VirticalStack from './VirticalStack';
 
+const PageWrapper = styled.div`
+    margin: 0.5rem;
+`;
+
 const TimeViewerHolder = styled.div`
     cursor: pointer;
 `;
@@ -39,28 +43,30 @@ const PopupPage: React.FC<Props> = () => {
     return (
         <>
             <GlobalStyle />
-            <VirticalStack>
-                <TimeViewer label="Local time" time={now} />
-                {selectedTimeZones && (
-                    <>
-                        <HorizontalLine />
-                        {selectedTimeZones.map((timeZone) => {
-                            return (
-                                <TimeViewerHolder onClick={() => onClickRemove(timeZone)}>
-                                    <TimeViewer timeZone={timeZone} time={now} />
-                                </TimeViewerHolder>
-                            );
-                        })}
-                        {selectedTimeZones.length > 0 ? <Note>Click to remove</Note> : <LinkButton onClick={onClickRestore}>Restore default</LinkButton>}
-                    </>
-                )}
-                {countries && (
-                    <>
-                        <HorizontalLine />
-                        <TimeZoneSelector countries={countries} onClickAdd={onClickAdd} />
-                    </>
-                )}
-            </VirticalStack>
+            <PageWrapper>
+                <VirticalStack>
+                    <TimeViewer label="Local time" time={now} />
+                    {selectedTimeZones && (
+                        <>
+                            <HorizontalLine />
+                            {selectedTimeZones.map((timeZone) => {
+                                return (
+                                    <TimeViewerHolder onClick={() => onClickRemove(timeZone)}>
+                                        <TimeViewer timeZone={timeZone} time={now} />
+                                    </TimeViewerHolder>
+                                );
+                            })}
+                            {selectedTimeZones.length > 0 ? <Note>Click to remove</Note> : <LinkButton onClick={onClickRestore}>Restore default</LinkButton>}
+                        </>
+                    )}
+                    {countries && (
+                        <>
+                            <HorizontalLine />
+                            <TimeZoneSelector countries={countries} onClickAdd={onClickAdd} />
+                        </>
+                    )}
+                </VirticalStack>
+            </PageWrapper>
         </>
     );
 };
