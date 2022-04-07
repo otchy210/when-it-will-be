@@ -1,4 +1,5 @@
 import { TextNodeRange } from '../utils/TextNodeRange';
+import { ParsedTime, starsWithTime } from '../utils/Texts';
 import { isTimeOffsetString, isTimeZoneIshString } from '../utils/TimeZoneIsh';
 import { useHighlighter } from './Highlighter';
 
@@ -31,15 +32,28 @@ export const onMouseMove = (e: MouseEvent) => {
         hightlighter.hide();
         return;
     }
-    const wordIndexes = range.findwordUnder(x, y);
-    if (!wordIndexes) {
+    const tzIndexes = range.findwordUnder(x, y);
+    if (!tzIndexes) {
         hightlighter.hide();
         return;
     }
-    const [wordStart, wordEnd, word] = wordIndexes;
+    const [tzStart, tzEnd, word] = tzIndexes;
     if (!(isTimeZoneIshString(word) || isTimeOffsetString(word))) {
         hightlighter.hide();
         return;
     }
+    let time: ParsedTime;
+    for (let i = 0; i < 16; i++) {
+        const foundTime = starsWithTime(range.text.slice(tzStart - i, tzStart));
+        if (time && !foundTime) {
+            break;
+        }
+        time = foundTime;
+    }
+    if (!time) {
+        hightlighter.hide();
+        return;
+    }
+    range.start(tzStart - time.length);
     range.hightlight();
 };

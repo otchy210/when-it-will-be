@@ -53,9 +53,10 @@ export const getPossibleTimeOffsetWords = (text: string): PossibleWordsIndexes =
     return getWords(text, (code: number) => isDigit(code) || isPossibleSign(code));
 };
 
-const timeRegEx = /^([012]?[0-9])(:?[0-5][0-9])?(:?[0-5][0-9])?\s*([ap]\.?m?\.?)?.*/i;
+const timeRegEx = /^[\s:]*([012]?[0-9])(:?[0-5][0-9])?(:?[0-5][0-9])?\s*([ap]\.?m?\.?)?.*/i;
 
-type ParsedTiime = {
+export type ParsedTime = {
+    length: number;
     hour: number;
     min: number;
     sec: number;
@@ -77,13 +78,14 @@ const parseAmpm = (ampm: string | undefined): string | undefined => {
     return ampmOnly.endsWith('m') ? ampmOnly : `${ampmOnly}m`;
 };
 
-export const starsWithTime = (text: string): ParsedTiime | undefined => {
+export const starsWithTime = (text: string): ParsedTime | undefined => {
     const results = timeRegEx.exec(text);
     if (results) {
+        const length = results[0].trimStart().length;
         const hour = parseTime(results[1]);
         const min = parseTime(results[2]);
         const sec = parseTime(results[3]);
         const ampm = parseAmpm(results[4]);
-        return { hour, min, sec, ampm };
+        return { length, hour, min, sec, ampm };
     }
 };

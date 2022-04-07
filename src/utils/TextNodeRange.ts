@@ -3,6 +3,7 @@ import { getPossibleTimeZoneIshWords, getPossibleTimeOffsetWords, PossibleWordsI
 
 export class TextNodeRange {
     private node: Text;
+    readonly text: string;
     private range: Range;
     private highlighter: Highlighter;
 
@@ -10,6 +11,7 @@ export class TextNodeRange {
         const range = node.ownerDocument.createRange();
         range.selectNodeContents(node);
         this.node = node;
+        this.text = this.node.textContent;
         this.range = range;
         this.highlighter = useHighlighter();
     }
@@ -38,14 +40,13 @@ export class TextNodeRange {
         }
     }
     findwordUnder(x: number, y: number): [start: number, end: number, word: string] | undefined {
-        const text = this.node.textContent;
-        const possibleTimeZoneIshWords = getPossibleTimeZoneIshWords(text);
-        const possibleTimeZoneIshWord = this.wordsContains(text, possibleTimeZoneIshWords, x, y);
+        const possibleTimeZoneIshWords = getPossibleTimeZoneIshWords(this.text);
+        const possibleTimeZoneIshWord = this.wordsContains(this.text, possibleTimeZoneIshWords, x, y);
         if (possibleTimeZoneIshWord) {
             return possibleTimeZoneIshWord;
         }
-        const timeOffsetWords = getPossibleTimeOffsetWords(text);
-        return this.wordsContains(text, timeOffsetWords, x, y);
+        const timeOffsetWords = getPossibleTimeOffsetWords(this.text);
+        return this.wordsContains(this.text, timeOffsetWords, x, y);
     }
 
     static of(node: Text) {

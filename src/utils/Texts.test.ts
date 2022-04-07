@@ -87,7 +87,7 @@ describe('getPossibleTimeOffsetWords', () => {
 describe('starsWithTime', () => {
     it('works', () => {
         expect(starsWithTime('00')).toMatchObject({ hour: 0, min: undefined, sec: undefined, ampm: undefined });
-        expect(starsWithTime(' 00')).toBeFalsy();
+        expect(starsWithTime('abc00')).toBeFalsy();
         expect(starsWithTime('2359  ')).toMatchObject({ hour: 23, min: 59, sec: undefined, ampm: undefined });
         expect(starsWithTime('01:00 CDT')).toMatchObject({ hour: 1, min: 0, sec: undefined, ampm: undefined });
         expect(starsWithTime('2:59pm')).toMatchObject({ hour: 2, min: 59, sec: undefined, ampm: 'pm' });
