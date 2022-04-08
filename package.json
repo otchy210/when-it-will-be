@@ -1,6 +1,6 @@
 {
     "name": "when-it-will-be",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "description": "A Chrome Extension which helps to know when it will be.",
     "main": "index.js",
     "scripts": {
