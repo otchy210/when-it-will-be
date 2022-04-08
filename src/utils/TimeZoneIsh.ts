@@ -43,7 +43,7 @@ const timeZoneIshList: TimeZoneIsh[] = [
     ['SIN', '+0800'],
     ['Singapore', '+0800'],
 
-    // Hyderabad
+    // India
     ['IST', '+0530'],
     ['India', '+0530'],
     ['HYD', '+0530'],
