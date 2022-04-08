@@ -10,6 +10,7 @@ import Viewer from './Viewer';
 import ViewerBox from './ViewerBox';
 import ViewerLine from './ViewerLine';
 import ViewerTime from './ViewerTime';
+import ViewerTimeSelector from './ViewerTimeSelector';
 import VirticalStack from './VirticalStack';
 
 const PageWrapper = styled.div`
@@ -19,9 +20,9 @@ const PageWrapper = styled.div`
 type Props = Record<string, never>;
 
 const PopupPage: React.FC<Props> = () => {
+    const [time, setTime] = useState<number>(Date.now());
     const [countries, setCountries] = useState<Countries>();
     const [selectedTimeZones, setSelectedTimeZones] = useState<string[]>();
-    const now = Date.now();
     const backgroundApi = useBackgroundApi();
     useEffect(() => {
         backgroundApi.getCountries().then(setCountries);
@@ -44,13 +45,13 @@ const PopupPage: React.FC<Props> = () => {
             <PageWrapper>
                 <VirticalStack>
                     <Viewer>
-                        <ViewerTime label="Local time" time={now} />
-                        <ViewerTime timeZone="UTC" time={now} />
+                        <ViewerTimeSelector time={time} onChangeTime={setTime} />
+                        <ViewerTime timeZone="UTC" time={time} />
                         {selectedTimeZones && (
                             <>
                                 <ViewerLine />
                                 {selectedTimeZones.map((timeZone) => {
-                                    return <ViewerTime timeZone={timeZone} time={now} onClickLabel={() => onClickRemove(timeZone)} />;
+                                    return <ViewerTime timeZone={timeZone} time={time} onClickLabel={() => onClickRemove(timeZone)} />;
                                 })}
                                 <ViewerBox>
                                     {selectedTimeZones.length > 0 ? (
