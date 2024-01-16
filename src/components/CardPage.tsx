@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useBackgroundApi } from '../message/BackgroundApi';
 import GlobalStyle from './GlobalStyle';
-import Viewer from './Viewer';
 import ViewerLine from './ViewerLine';
 import ViewerTime from './ViewerTime';
 
@@ -14,6 +13,8 @@ const CardWrapper = styled.div`
     box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.5);
     float: left;
 `;
+
+const Viewer = styled.table``;
 
 type Props = Record<string, never>;
 
